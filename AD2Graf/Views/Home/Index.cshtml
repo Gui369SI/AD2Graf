@@ -1,0 +1,78 @@
+﻿@{
+    ViewData["Title"] = "Home";
+}
+
+<!-- Hero Section com borda realçada -->
+<div style="background-color: #f5f3f0; padding: 80px 0; margin-bottom: 60px; border-top: 3px solid #3d3d3d; border-bottom: 3px solid #3d3d3d;">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-7">
+                <span class="badge mb-3" style="background-color: #3d3d3d; font-size: 0.85rem; padding: 8px 16px; letter-spacing: 1px; border: 2px solid #3d3d3d;">SISTEMA DE GESTÃO</span>
+                <h1 style="font-size: 3.5rem; font-weight: 700; color: #1a1a1a; line-height: 1.1; margin: 20px 0;">
+                    AD2Graf
+                </h1>
+                <p style="font-size: 1.3rem; color: #666; margin: 20px 0 30px 0; line-height: 1.6;">
+                    Gestão para sua gráfica. Controlar & Otimizar.
+                </p>
+                <div style="display: flex; gap: 16px;">
+                    <a asp-controller="Pedidos" asp-action="Index" class="btn" style="background-color: #3d3d3d; color: white; padding: 12px 32px; font-weight: 500; border: 2px solid #3d3d3d; border-radius: 4px; text-decoration: none; transition: all 0.3s;">
+                        Acessar Pedidos
+                    </a>
+                    <a asp-controller="Estoques" asp-action="Index" class="btn" style="background-color: transparent; color: #3d3d3d; padding: 12px 32px; font-weight: 500; border: 2px solid #3d3d3d; border-radius: 4px; text-decoration: none; transition: all 0.3s;">
+                        Ver Estoque
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Seção de Módulos -->
+<div class="container" style="margin-bottom: 100px; padding-top: 60px; padding-bottom: 60px;">
+    <h3 style="text-align: center; color: #3d3d3d; font-size: 0.95rem; letter-spacing: 2px; margin-bottom: 50px; text-transform: uppercase; font-weight: 600;">Acesso Rápido</h3>
+
+    <div class="row g-4 align-items-stretch">
+        <div class="col-md-4">
+            <div style="background-color: white; padding: 40px 30px; border: 2px solid #3d3d3d; border-radius: 4px; transition: all 0.3s; text-align: left; height: 100%;">
+                <h5 style="color: #1a1a1a; font-weight: 600; font-size: 1.1rem; margin-bottom: 12px;">Solicitações</h5>
+                <p style="color: #999; font-size: 0.95rem; margin-bottom: 20px; line-height: 1.6;">
+                    Gerencie os pedidos de impressão da gráfica.
+                </p>
+                <a asp-controller="Pedidos" asp-action="Index" style="color: #3d3d3d; font-weight: 500; text-decoration: none; font-size: 0.9rem;">
+                    Acessar →
+                </a>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div style="background-color: white; padding: 40px 30px; border: 2px solid #3d3d3d; border-radius: 4px; transition: all 0.3s; text-align: left; height: 100%;">
+                <h5 style="color: #1a1a1a; font-weight: 600; font-size: 1.1rem; margin-bottom: 12px;">Estoque</h5>
+                <p style="color: #999; font-size: 0.95rem; margin-bottom: 20px; line-height: 1.6;">
+                    Controlar os materiais disponíveis.
+                </p>
+                <a asp-controller="Estoques" asp-action="Index" style="color: #3d3d3d; font-weight: 500; text-decoration: none; font-size: 0.9rem;">
+                    Acessar →
+                </a>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div style="background-color: white; padding: 40px 30px; border: 2px solid #3d3d3d; border-radius: 4px; transition: all 0.3s; text-align: left; height: 100%;">
+                <h5 style="color: #1a1a1a; font-weight: 600; font-size: 1.1rem; margin-bottom: 12px;">Movimentações</h5>
+                <p style="color: #999; font-size: 0.95rem; margin-bottom: 20px; line-height: 1.6;">
+                    Rastrear entradas e saídas de materiais/insumos.
+                </p>
+                <a asp-controller="Movimentacoes" asp-action="Index" style="color: #3d3d3d; font-weight: 500; text-decoration: none; font-size: 0.9rem;">
+                    Acessar →
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    a.btn:hover {
+        opacity: 0.9;
+        transform: translateY(-2px);
+    }
+</style>

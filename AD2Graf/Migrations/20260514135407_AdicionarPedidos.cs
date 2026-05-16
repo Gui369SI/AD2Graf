@@ -1,0 +1,39 @@
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
+
+#nullable disable
+
+namespace AD2Graf.Migrations
+{
+    /// <inheritdoc />
+    public partial class AdicionarPedidos : Migration
+    {
+        /// <inheritdoc />
+        protected override void Up(MigrationBuilder migrationBuilder)
+        {
+            migrationBuilder.CreateTable(
+                name: "Pedidos",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Descricao = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
+                    Quantidade = table.Column<int>(type: "int", nullable: false),
+                    Preco = table.Column<decimal>(type: "decimal(10,2)", nullable: false),
+                    Status = table.Column<int>(type: "int", nullable: false),
+                    DataCriacao = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Pedidos", x => x.Id);
+                });
+        }
+
+        /// <inheritdoc />
+        protected override void Down(MigrationBuilder migrationBuilder)
+        {
+            migrationBuilder.DropTable(
+                name: "Pedidos");
+        }
+    }
+}

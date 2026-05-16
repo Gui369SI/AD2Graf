@@ -1,0 +1,132 @@
+﻿<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] — AD2Graf</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/AD2Graf.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+
+            body {
+                background-color: #ffffff;
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', sans-serif;
+                color: #333;
+                line-height: 1.6;
+            }
+
+            .navbar-custom {
+                background-color: #ffffff;
+                border-bottom: 1px solid #e8e8e8;
+                box-shadow: none;
+                padding: 16px 0;
+            }
+
+            .navbar-brand-custom {
+                font-weight: 700;
+                font-size: 1.1rem;
+                color: #1a1a1a !important;
+                letter-spacing: 0.5px;
+            }
+
+            .nav-link-custom {
+                color: #666 !important;
+                font-weight: 500;
+                font-size: 0.9rem;
+                padding: 0 !important;
+                transition: all 0.2s;
+                display: flex;
+                align-items: center;
+                gap: 6px;
+            }
+
+                .nav-link-custom:hover {
+                    color: #1a1a1a !important;
+                }
+
+            .main-content {
+                padding: 0;
+                min-height: calc(100vh - 200px);
+            }
+
+            footer {
+                background-color: #f5f3f0;
+                border-top: 1px solid #e8e8e8;
+                color: #999;
+                font-size: 0.85rem;
+                margin-top: 80px;
+                padding: 40px 0;
+            }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-custom">
+            <div class="container">
+                <a class="navbar-brand navbar-brand-custom" asp-area="" asp-controller="Home" asp-action="Index">
+                    AD2Graf
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-end">
+                    <ul class="navbar-nav" style="display: flex; gap: 0;">
+        <li class="nav-item" style="border-right: 2px solid #3d3d3d; padding-right: 16px; margin-right: 16px;">
+            <a class="nav-link nav-link-custom" asp-area="" asp-controller="Home" asp-action="Index">
+                <i class="bi bi-house-fill"></i> Home
+            </a>
+        </li>
+        <li class="nav-item" style="border-right: 2px solid #3d3d3d; padding-right: 16px; margin-right: 16px;">
+            <a class="nav-link nav-link-custom" asp-area="" asp-controller="Pedidos" asp-action="Index">
+                <i class="bi bi-file-earmark-text-fill"></i> Pedidos
+            </a>
+        </li>
+        <li class="nav-item" style="border-right: 2px solid #3d3d3d; padding-right: 16px; margin-right: 16px;">
+            <a class="nav-link nav-link-custom" asp-area="" asp-controller="Estoques" asp-action="Index">
+                <i class="bi bi-box-seam-fill"></i> Estoque
+            </a>
+        </li>
+        <li class="nav-item" style="border-right: 2px solid #3d3d3d; padding-right: 16px; margin-right: 16px;">
+            <a class="nav-link nav-link-custom" asp-area="" asp-controller="Insumos" asp-action="Index">
+                <i class="bi bi-bag-fill"></i> Insumos
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link nav-link-custom" asp-area="" asp-controller="Movimentacoes" asp-action="Index">
+                <i class="bi bi-arrow-left-right"></i> Movimentações
+        </a>
+    </li>
+</ul>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="main-content">
+        <main role="main">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer>
+        <div class="container text-center">
+            <span>AD2Graf © 2026 — Sistema de Gestão para Gráfica</span>
+        </div>
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

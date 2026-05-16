@@ -1,0 +1,42 @@
+﻿@model IEnumerable<AD2Graf.Models.EstoqueResumo>
+
+@{
+    ViewData["Title"] = "Estoque Atual";
+}
+
+<h1>Estoque Atual</h1>
+
+<p>
+    <a asp-action="Create">Registrar Movimentação</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Tipo de Insumo</th>
+            <th>Total Entradas</th>
+            <th>Total Saídas</th>
+            <th>Saldo</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.NomeInsumo</td>
+                <td>@item.TotalEntrada</td>
+                <td>@item.TotalSaida</td>
+                <td>
+                    @if (item.Saldo <= 0)
+                    {
+                        <span style="color:red; font-weight:bold;">@item.Saldo</span>
+                    }
+                    else
+                    {
+                        <span style="color:green;">@item.Saldo</span>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
