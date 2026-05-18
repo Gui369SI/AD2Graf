@@ -15,12 +15,12 @@
             <form asp-action="Create" method="post">
                 <div style="margin-bottom: 24px;">
                     <label asp-for="InsumoId" style="display: block; color: #1a1a1a; font-weight: 600; margin-bottom: 8px; font-size: 0.95rem;">Material / Insumo</label>
-                    <select asp-for="InsumoId" asp-items="ViewBag.InsumoId" style="width: 100%; padding: 12px 16px; border: 1px solid #e8e8e8; border-radius: 4px; font-size: 0.95rem; font-family: inherit;"></select>
+                    <input type="text" id="NomeInsumo" name="NomeInsumo" placeholder="EX: Papel A4, Tinta Preta..." style="width: 100%; padding: 12px 16px; border: 1px solid #e8e8e8; border-radius: 4px; font-size: 0.95rem; font-family: inherit;" />
                     <span asp-validation-for="InsumoId" style="display: block; color: #dc3545; font-size: 0.85rem; margin-top: 4px;"></span>
                 </div>
 
                 <div style="margin-bottom: 24px;">
-                    <label asp-for="QuantidadeEstoque" style="display: block; color: #1a1a1a; font-weight: 600; margin-bottom: 8px; font-size: 0.95rem;">Quantidade em Estoque</label>
+                    <label asp-for="QuantidadeEstoque" style="display: block; color: #1a1a1a; font-weight: 600; margin-bottom: 8px; font-size: 0.95rem;">Estoque Inicial</label>
                     <input asp-for="QuantidadeEstoque" type="number" min="0" style="width: 100%; padding: 12px 16px; border: 1px solid #e8e8e8; border-radius: 4px; font-size: 0.95rem; font-family: inherit;" />
                     <span asp-validation-for="QuantidadeEstoque" style="display: block; color: #dc3545; font-size: 0.85rem; margin-top: 4px;"></span>
                 </div>

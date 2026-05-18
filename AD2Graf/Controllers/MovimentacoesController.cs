@@ -18,30 +18,12 @@ namespace AD2Graf.Controllers
         // GET: Movimentacoes
         public async Task<IActionResult> Index()
         {
-            var insumos = await _context.Insumo.ToListAsync();
+            var movimentacoes = await _context.Movimentacao
+                .Include(m => m.Insumo)
+                .OrderByDescending(m => m.DataMovimentacao)
+                .ToListAsync();
 
-            var saldos = new List<EstoqueResumo>();
-
-            foreach (var insumo in insumos)
-            {
-                var movs = await _context.Movimentacao
-                    .Where(m => m.InsumoId == insumo.Id)
-                    .ToListAsync();
-
-                if (!movs.Any()) continue;
-
-                saldos.Add(new EstoqueResumo
-                {
-                    InsumoId = insumo.Id,
-                    NomeInsumo = insumo.Nome,
-                    TotalEntrada = movs.Where(m => m.TipoMovimentacao == TipoMovimentacao.Entrada).Sum(m => m.Quantidade),
-                    TotalSaida = movs.Where(m => m.TipoMovimentacao == TipoMovimentacao.Saida).Sum(m => m.Quantidade),
-                    Saldo = movs.Where(m => m.TipoMovimentacao == TipoMovimentacao.Entrada).Sum(m => m.Quantidade)
-                          - movs.Where(m => m.TipoMovimentacao == TipoMovimentacao.Saida).Sum(m => m.Quantidade)
-                });
-            }
-
-            return View(saldos);
+            return View(movimentacoes);
         }
 
         // GET: Movimentacoes/Details/5
@@ -159,7 +141,23 @@ namespace AD2Graf.Controllers
         {
             var movimentacao = await _context.Movimentacao.FindAsync(id);
             if (movimentacao != null)
+            {
+                // Reverte o efeito da movimentação no estoque
+                var estoque = await _context.Estoque
+                    .FirstOrDefaultAsync(e => e.InsumoId == movimentacao.InsumoId);
+
+                if (estoque != null)
+                {
+                    if (movimentacao.TipoMovimentacao == TipoMovimentacao.Entrada)
+                        estoque.QuantidadeEstoque -= (int)movimentacao.Quantidade;
+                    else if (movimentacao.TipoMovimentacao == TipoMovimentacao.Saida)
+                        estoque.QuantidadeEstoque += (int)movimentacao.Quantidade;
+
+                    _context.Update(estoque);
+                }
+
                 _context.Movimentacao.Remove(movimentacao);
+            }
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));

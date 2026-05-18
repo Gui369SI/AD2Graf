@@ -1,4 +1,4 @@
-﻿@model List<AD2Graf.Models.EstoqueResumo>
+﻿@model List<AD2Graf.Models.Movimentacao>
 
 @{
     ViewData["Title"] = "Movimentações";
@@ -8,51 +8,74 @@
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px;">
         <div>
             <h2 style="color: #1a1a1a; font-weight: 700; font-size: 2rem; margin-bottom: 8px;">Movimentações</h2>
-            <p style="color: #999; font-size: 0.95rem;">Resumo de entradas e saídas por material</p>
+            <p style="color: #999; font-size: 0.95rem;">Histórico de entradas e saídas por material</p>
         </div>
         <a asp-action="Create" style="background-color: #3d3d3d; color: white; padding: 12px 24px; text-decoration: none; border-radius: 4px; font-weight: 500; display: flex; align-items: center; gap: 8px;">
             <i class="bi bi-plus-circle-fill"></i> Nova Movimentação
         </a>
     </div>
 
-    <div style="overflow-x: auto; border: 2px solid #3d3d3d; border-radius: 4px;">
-        <table style="width: 100%; border-collapse: collapse;">
-            <thead>
-                <tr style="background-color: #f5f3f0; border-bottom: 2px solid #3d3d3d;">
-                    <th style="padding: 16px; text-align: left; color: #1a1a1a; font-weight: 600; font-size: 0.9rem;">Material</th>
-                    <th style="padding: 16px; text-align: left; color: #1a1a1a; font-weight: 600; font-size: 0.9rem;">Total Entradas</th>
-                    <th style="padding: 16px; text-align: left; color: #1a1a1a; font-weight: 600; font-size: 0.9rem;">Total Saídas</th>
-                    <th style="padding: 16px; text-align: left; color: #1a1a1a; font-weight: 600; font-size: 0.9rem;">Saldo Atual</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model)
-                {
-                    <tr style="border-bottom: 1px solid #e8e8e8;">
-                        <td style="padding: 16px; color: #333; font-weight: 500;">@item.NomeInsumo</td>
-                        <td style="padding: 16px; color: #155724; font-weight: 500;">+@item.TotalEntrada</td>
-                        <td style="padding: 16px; color: #dc3545; font-weight: 500;">-@item.TotalSaida</td>
-                        <td style="padding: 16px;">
-                            <span style="display: inline-block; padding: 6px 12px; border-radius: 4px; font-size: 0.85rem; font-weight: 600;
-                                background-color: @(item.Saldo >= 0 ? "#d4edda" : "#f8d7da");
-                                color: @(item.Saldo >= 0 ? "#155724" : "#721c24");">
-                                @item.Saldo
-                            </span>
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-    </div>
-
     @if (!Model.Any())
     {
-        <div style="text-align: center; padding: 60px 20px; color: #999;">
+        <div style="text-align: center; padding: 60px 20px; color: #999; border: 2px solid #3d3d3d; border-radius: 4px;">
             <i class="bi bi-arrow-left-right" style="font-size: 3rem; display: block; margin-bottom: 16px;"></i>
             <p style="font-size: 1.1rem;">Nenhuma movimentação registrada ainda</p>
             <p style="margin-top: 8px;">
                 <a asp-action="Create" style="color: #3d3d3d; font-weight: 500; text-decoration: none;">Registrar primeira movimentação →</a>
             </p>
+        </div>
+    }
+    else
+    {
+        <div style="overflow-x: auto; border: 2px solid #3d3d3d; border-radius: 4px;">
+            <table style="width: 100%; border-collapse: collapse;">
+                <thead>
+                    <tr style="background-color: #f5f3f0; border-bottom: 2px solid #3d3d3d;">
+                        <th style="padding: 16px; text-align: left; color: #1a1a1a; font-weight: 600; font-size: 0.9rem;">Data</th>
+                        <th style="padding: 16px; text-align: left; color: #1a1a1a; font-weight: 600; font-size: 0.9rem;">Tipo</th>
+                        <th style="padding: 16px; text-align: left; color: #1a1a1a; font-weight: 600; font-size: 0.9rem;">Insumo</th>
+                        <th style="padding: 16px; text-align: left; color: #1a1a1a; font-weight: 600; font-size: 0.9rem;">Quantidade</th>
+                        <th style="padding: 16px; text-align: left; color: #1a1a1a; font-weight: 600; font-size: 0.9rem;">Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        bool isEntrada = item.TipoMovimentacao == AD2Graf.Models.TipoMovimentacao.Entrada;
+                        <tr style="border-bottom: 1px solid #e8e8e8;">
+                            <td style="padding: 16px; color: #555; font-size: 0.9rem;">
+                                @item.DataMovimentacao.ToString("dd/MM/yyyy HH:mm")
+                            </td>
+                            <td style="padding: 16px;">
+                                <span style="display: inline-flex; align-items: center; gap: 6px; padding: 4px 12px; border-radius: 4px; font-size: 0.85rem; font-weight: 600;
+                                    background-color: @(isEntrada ? "#d4edda" : "#f8d7da");
+                                    color: @(isEntrada ? "#155724" : "#721c24");">
+                                    <i class="bi @(isEntrada ? "bi-arrow-down-circle-fill" : "bi-arrow-up-circle-fill")"></i>
+                                    @(isEntrada ? "Entrada" : "Saída")
+                                </span>
+                            </td>
+                            <td style="padding: 16px; color: #333; font-weight: 500;">
+                                @item.Insumo?.Nome
+                            </td>
+                            <td style="padding: 16px; color: @(isEntrada ? "#155724" : "#dc3545"); font-weight: 600;">
+                                @(isEntrada ? "+" : "-")@item.Quantidade.ToString("N2")
+                            </td>
+                            <td style="padding: 16px;">
+                                <div style="display: flex; gap: 12px;">
+                                    <a asp-action="Details" asp-route-id="@item.Id"
+                                       style="color: #3d3d3d; text-decoration: none; font-size: 0.85rem; font-weight: 500;">
+                                        <i class="bi bi-eye"></i> Detalhes
+                                    </a>
+                                    <a asp-action="Delete" asp-route-id="@item.Id"
+                                       style="color: #dc3545; text-decoration: none; font-size: 0.85rem; font-weight: 500;">
+                                        <i class="bi bi-trash"></i> Excluir
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
         </div>
     }
 </div>
