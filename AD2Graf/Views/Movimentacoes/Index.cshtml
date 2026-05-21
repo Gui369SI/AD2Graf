@@ -31,8 +31,8 @@
             <table style="width: 100%; border-collapse: collapse;">
                 <thead>
                     <tr style="background-color: #f5f3f0; border-bottom: 2px solid #3d3d3d;">
-                        <th style="padding: 16px; text-align: left; color: #1a1a1a; font-weight: 600; font-size: 0.9rem;">Data</th>
-                        <th style="padding: 16px; text-align: left; color: #1a1a1a; font-weight: 600; font-size: 0.9rem;">Tipo</th>
+                        <th style="padding: 16px; text-align: left; color: #1a1a1a; font-weight: 600; font-size: 0.9rem;">Data de Registro</th>
+                        <th style="padding: 16px; text-align: left; color: #1a1a1a; font-weight: 600; font-size: 0.9rem;">Operação</th>
                         <th style="padding: 16px; text-align: left; color: #1a1a1a; font-weight: 600; font-size: 0.9rem;">Insumo</th>
                         <th style="padding: 16px; text-align: left; color: #1a1a1a; font-weight: 600; font-size: 0.9rem;">Quantidade</th>
                         <th style="padding: 16px; text-align: left; color: #1a1a1a; font-weight: 600; font-size: 0.9rem;">Ações</th>
@@ -62,13 +62,11 @@
                             </td>
                             <td style="padding: 16px;">
                                 <div style="display: flex; gap: 12px;">
-                                    <a asp-action="Details" asp-route-id="@item.Id"
-                                       style="color: #3d3d3d; text-decoration: none; font-size: 0.85rem; font-weight: 500;">
+                                    <a asp-action="Details" asp-route-id="@item.Id" style="padding: 6px 12px; background-color: transparent; color: #3d3d3d; border: 1px solid #3d3d3d; border-radius: 4px; text-decoration: none; font-size: 0.85rem; font-weight: 500; transition: all 0.2s; display: flex; align-items: center; gap: 4px;">
                                         <i class="bi bi-eye"></i> Detalhes
                                     </a>
-                                    <a asp-action="Delete" asp-route-id="@item.Id"
-                                       style="color: #dc3545; text-decoration: none; font-size: 0.85rem; font-weight: 500;">
-                                        <i class="bi bi-trash"></i> Excluir
+                                        <a asp-action="Delete" asp-route-id="@item.Id" style="padding: 6px 12px; background-color: transparent; color: #dc3545; border: 1px solid #dc3545; border-radius: 4px; text-decoration: none; font-size: 0.85rem; font-weight: 500; transition: all 0.2s; display: flex; align-items: center; gap: 4px;">
+                                            <i class="bi bi-trash-fill"></i> Excluir
                                     </a>
                                 </div>
                             </td>

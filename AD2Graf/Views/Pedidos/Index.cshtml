@@ -22,9 +22,10 @@
                     <th style="padding: 16px; text-align: left; color: #1a1a1a; font-weight: 600; font-size: 0.9rem;">Empresa</th>
                     <th style="padding: 16px; text-align: left; color: #1a1a1a; font-weight: 600; font-size: 0.9rem;">Descrição</th>
                     <th style="padding: 16px; text-align: left; color: #1a1a1a; font-weight: 600; font-size: 0.9rem;">Quantidade</th>
-                    <th style="padding: 16px; text-align: left; color: #1a1a1a; font-weight: 600; font-size: 0.9rem;">Preço</th>
+                    <th style="padding: 16px; text-align: left; color: #1a1a1a; font-weight: 600; font-size: 0.9rem;">Preço Unit.</th>
+                    <th style="padding: 16px; text-align: left; color: #1a1a1a; font-weight: 600; font-size: 0.9rem;">Valor Total</th>
                     <th style="padding: 16px; text-align: left; color: #1a1a1a; font-weight: 600; font-size: 0.9rem;">Status</th>
-                    <th style="padding: 16px; text-align: left; color: #1a1a1a; font-weight: 600; font-size: 0.9rem;">Data</th>
+                    <th style="padding: 16px; text-align: left; color: #1a1a1a; font-weight: 600; font-size: 0.9rem;">Data de Cadastro</th>
                     <th style="padding: 16px; text-align: left; color: #1a1a1a; font-weight: 600; font-size: 0.9rem;">Ações</th>
                 </tr>
             </thead>
@@ -36,11 +37,12 @@
                         <td style="padding: 16px; color: #333;">@pedido.Descricao</td>
                         <td style="padding: 16px; color: #333;">@pedido.Quantidade</td>
                         <td style="padding: 16px; color: #333;">@pedido.Preco.ToString("C")</td>
+                        <td style="padding: 16px; color: #333;" font-weight: 600;">@((pedido.Preco * pedido.Quantidade).ToString("C"))</td>
                         <td style="padding: 16px;">
                             <span style="display: inline-block; padding: 6px 12px; border-radius: 4px; font-size: 0.85rem; font-weight: 500; background-color: @(pedido.Status == AD2Graf.Models.StatusPedido.Concluido ? "#d4edda" :
-                                                                                             pedido.Status == AD2Graf.Models.StatusPedido.Cancelado ? "#e2e3e5" :
+                                                                                             pedido.Status == AD2Graf.Models.StatusPedido.Cancelado ? "#f8d7da" :
                                                                                              pedido.Status == AD2Graf.Models.StatusPedido.EmProducao ? "#cfe2ff" : "#fff3cd"); color: @(pedido.Status == AD2Graf.Models.StatusPedido.Concluido ? "#155724" :
-                                                                                             pedido.Status == AD2Graf.Models.StatusPedido.Cancelado ? "#383d41" :
+                                                                                             pedido.Status == AD2Graf.Models.StatusPedido.Cancelado ? "#721c24" :
                                                                                              pedido.Status == AD2Graf.Models.StatusPedido.EmProducao ? "#084298" : "#997404");">
                                 @Html.DisplayFor(m => pedido.Status)
                             </span>

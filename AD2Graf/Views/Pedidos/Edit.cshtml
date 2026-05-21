@@ -23,7 +23,7 @@
 
                 <div style="margin-bottom: 24px;">
                     <label asp-for="Descricao" style="display: block; color: #1a1a1a; font-weight: 600; margin-bottom: 8px; font-size: 0.95rem;">Descrição</label>
-                    <input asp-for="Descricao" style="width: 100%; padding: 12px 16px; border: 1px solid #e8e8e8; border-radius: 4px; font-size: 0.95rem; font-family: inherit;" />
+                    <input asp-for="Descricao" style="width: 100%; padding: 12px 16px; border: 1px solid #e8e8e8; border-radius: 4px; font-size: 0.95rem; font-family: inherit;" placeholder="Ex: Flyer, Banner, Panfleto..." />
                     <span asp-validation-for="Descricao" style="display: block; color: #dc3545; font-size: 0.85rem; margin-top: 4px;"></span>
                 </div>
 
@@ -34,7 +34,7 @@
                 </div>
 
                 <div style="margin-bottom: 24px;">
-                    <label asp-for="Preco" style="display: block; color: #1a1a1a; font-weight: 600; margin-bottom: 8px; font-size: 0.95rem;">Preço</label>
+                    <label asp-for="Preco" style="display: block; color: #1a1a1a; font-weight: 600; margin-bottom: 8px; font-size: 0.95rem;">Preço Unit.</label>
                     <div style="display: flex; gap: 0;">
                         <span style="padding: 12px 16px; background-color: #3d3d3d; color: white; font-weight: 500;">R$</span>
                         <input asp-for="Preco" type="number" step="0.01" min="0.01" style="flex: 1; padding: 12px 16px; border: 1px solid #e8e8e8; border-left: none; border-radius: 0 4px 4px 0; font-size: 0.95rem; font-family: inherit;" />

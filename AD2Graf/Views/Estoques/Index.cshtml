@@ -21,8 +21,8 @@
                 <tr style="background-color: #f5f3f0; border-bottom: 2px solid #3d3d3d;">
                     <th style="padding: 16px; text-align: left; color: #1a1a1a; font-weight: 600; font-size: 0.9rem;">Material</th>
                     <th style="padding: 16px; text-align: left; color: #1a1a1a; font-weight: 600; font-size: 0.9rem;">Quantidade</th>
-                    <th style="padding: 16px; text-align: left; color: #1a1a1a; font-weight: 600; font-size: 0.9rem;">Preço Unitário</th>
-                    <th style="padding: 16px; text-align: left; color: #1a1a1a; font-weight: 600; font-size: 0.9rem;">Data Cadastro</th>
+                    <th style="padding: 16px; text-align: left; color: #1a1a1a; font-weight: 600; font-size: 0.9rem;">Preço Unit.</th>
+                    <th style="padding: 16px; text-align: left; color: #1a1a1a; font-weight: 600; font-size: 0.9rem;">Data de Cadastro</th>
                     <th style="padding: 16px; text-align: left; color: #1a1a1a; font-weight: 600; font-size: 0.9rem;">Ações</th>
                 </tr>
             </thead>
@@ -36,8 +36,8 @@
                         <td style="padding: 16px; color: #999;">@item.DataCadastro.ToString("dd/MM/yyyy")</td>
                         <td style="padding: 16px;">
                             <div style="display: flex; gap: 8px;">
-                                <a asp-action="Edit" asp-route-id="@item.Id" style="padding: 6px 12px; background-color: transparent; color: #3d3d3d; border: 1px solid #3d3d3d; border-radius: 4px; text-decoration: none; font-size: 0.85rem; font-weight: 500; transition: all 0.2s; display: flex; align-items: center; gap: 4px;">
-                                    <i class="bi bi-pencil-fill"></i> Editar
+                                <a asp-action="Details" asp-route-id="@item.Id" style="padding: 6px 12px; background-color: transparent; color: #3d3d3d; border: 1px solid #3d3d3d; border-radius: 4px; text-decoration: none; font-size: 0.85rem; font-weight: 500; transition: all 0.2s; display: flex; align-items: center; gap: 4px;">
+                                    <i class="bi bi-eye"></i> Detalhes
                                 </a>
                                 <a asp-action="Delete" asp-route-id="@item.Id" style="padding: 6px 12px; background-color: transparent; color: #dc3545; border: 1px solid #dc3545; border-radius: 4px; text-decoration: none; font-size: 0.85rem; font-weight: 500; transition: all 0.2s; display: flex; align-items: center; gap: 4px;">
                                     <i class="bi bi-trash-fill"></i> Excluir
