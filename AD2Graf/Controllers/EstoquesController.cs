@@ -19,6 +19,16 @@ namespace AD2Graf.Controllers
             var estoques = await _context.Estoque
                 .Include(e => e.Insumo)
                 .ToListAsync();
+
+            // Busca a data da última movimentação por InsumoId
+            var ultimasMovimentacoes = await _context.Movimentacao
+                .GroupBy(m => m.InsumoId)
+                .Select(g => new { InsumoId = g.Key, UltimaData = g.Max(m => m.DataMovimentacao) })
+                .ToListAsync();
+
+            ViewBag.UltimasMovimentacoes = ultimasMovimentacoes
+                .ToDictionary(x => x.InsumoId, x => x.UltimaData);
+
             return View(estoques);
         }
 
@@ -137,7 +147,13 @@ namespace AD2Graf.Controllers
         {
             var estoque = await _context.Estoque.FindAsync(id);
             if (estoque != null)
+            {
+                // Remove o estoque e o insumo vinculado
+                var insumo = await _context.Insumo.FindAsync(estoque.InsumoId);
                 _context.Estoque.Remove(estoque);
+                if (insumo != null)
+                    _context.Insumo.Remove(insumo);
+            }
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));

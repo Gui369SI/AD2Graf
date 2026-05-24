@@ -43,7 +43,8 @@ namespace AD2Graf.Controllers
         // GET: Movimentacoes/Create
         public async Task<IActionResult> Create()
         {
-            ViewBag.InsumoId = new SelectList(await _context.Insumo.ToListAsync(), "Id", "Nome");
+            ViewBag.InsumoId = new SelectList(
+                await _context.Insumo.Where(i => i.Ativo).ToListAsync(), "Id", "Nome");
             return View();
         }
 

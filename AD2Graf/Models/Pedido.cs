@@ -5,6 +5,7 @@ namespace AD2Graf.Models
 {
     public class Pedido
     {
+        [Key]
         public int Id { get; set; }
 
         [Required(ErrorMessage = "Informe a empresa ou organização")]

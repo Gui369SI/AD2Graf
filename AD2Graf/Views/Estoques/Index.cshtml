@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Controle de Estoque";
+    var ultimasMovs = ViewBag.UltimasMovimentacoes as Dictionary<int, DateTime>;
 }
 
 <div class="container" style="padding: 60px 0;">
@@ -10,9 +11,6 @@
             <h2 style="color: #1a1a1a; font-weight: 700; font-size: 2rem; margin-bottom: 8px;">Controle de Estoque</h2>
             <p style="color: #999; font-size: 0.95rem;">Gerencie o inventário de materiais da gráfica</p>
         </div>
-        <a asp-action="Create" style="background-color: #3d3d3d; color: white; padding: 12px 24px; text-decoration: none; border-radius: 4px; font-weight: 500; display: flex; align-items: center; gap: 8px; transition: all 0.3s;">
-            <i class="bi bi-plus-circle-fill"></i> Novo Material
-        </a>
     </div>
 
     <div style="overflow-x: auto; border: 2px solid #3d3d3d; border-radius: 4px;">
@@ -22,25 +20,26 @@
                     <th style="padding: 16px; text-align: left; color: #1a1a1a; font-weight: 600; font-size: 0.9rem;">Material</th>
                     <th style="padding: 16px; text-align: left; color: #1a1a1a; font-weight: 600; font-size: 0.9rem;">Quantidade</th>
                     <th style="padding: 16px; text-align: left; color: #1a1a1a; font-weight: 600; font-size: 0.9rem;">Preço Unit.</th>
-                    <th style="padding: 16px; text-align: left; color: #1a1a1a; font-weight: 600; font-size: 0.9rem;">Data de Cadastro</th>
+                    <th style="padding: 16px; text-align: left; color: #1a1a1a; font-weight: 600; font-size: 0.9rem;">Última Movimentação</th>
                     <th style="padding: 16px; text-align: left; color: #1a1a1a; font-weight: 600; font-size: 0.9rem;">Ações</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach (var item in Model)
                 {
-                    <tr style="border-bottom: 1px solid #e8e8e8; transition: all 0.2s;">
+                    string ultimaData = (ultimasMovs != null && ultimasMovs.ContainsKey(item.InsumoId))
+                        ? ultimasMovs[item.InsumoId].ToString("dd/MM/yyyy HH:mm")
+                        : "—";
+
+                    <tr style="border-bottom: 1px solid #e8e8e8;">
                         <td style="padding: 16px; color: #333;">@item.Insumo?.Nome</td>
                         <td style="padding: 16px; color: #333;">@item.QuantidadeEstoque</td>
                         <td style="padding: 16px; color: #333;">@item.PrecoUnitario.ToString("C")</td>
-                        <td style="padding: 16px; color: #999;">@item.DataCadastro.ToString("dd/MM/yyyy")</td>
+                        <td style="padding: 16px; color: #999;">@ultimaData</td>
                         <td style="padding: 16px;">
                             <div style="display: flex; gap: 8px;">
-                                <a asp-action="Details" asp-route-id="@item.Id" style="padding: 6px 12px; background-color: transparent; color: #3d3d3d; border: 1px solid #3d3d3d; border-radius: 4px; text-decoration: none; font-size: 0.85rem; font-weight: 500; transition: all 0.2s; display: flex; align-items: center; gap: 4px;">
-                                    <i class="bi bi-eye"></i> Detalhes
-                                </a>
-                                <a asp-action="Delete" asp-route-id="@item.Id" style="padding: 6px 12px; background-color: transparent; color: #dc3545; border: 1px solid #dc3545; border-radius: 4px; text-decoration: none; font-size: 0.85rem; font-weight: 500; transition: all 0.2s; display: flex; align-items: center; gap: 4px;">
-                                    <i class="bi bi-trash-fill"></i> Excluir
+                                <a asp-action="Details" asp-route-id="@item.Id" style="padding: 6px 12px; background-color: transparent; color: #3d3d3d; border: 1px solid #3d3d3d; border-radius: 4px; text-decoration: none; font-size: 0.85rem; font-weight: 500; display: flex; align-items: center; gap: 4px;">
+                                    <i class="bi bi-eye-fill"></i> Detalhes
                                 </a>
                             </div>
                         </td>
@@ -56,7 +55,7 @@
             <i class="bi bi-box-seam" style="font-size: 3rem; display: block; margin-bottom: 16px;"></i>
             <p style="font-size: 1.1rem;">Nenhum material cadastrado ainda</p>
             <p style="margin-top: 8px;">
-                <a asp-action="Create" style="color: #3d3d3d; font-weight: 500; text-decoration: none;">Adicionar primeiro material →</a>
+                <a asp-controller="Insumos" asp-action="Create" style="color: #3d3d3d; font-weight: 500; text-decoration: none;">Cadastrar primeiro insumo →</a>
             </p>
         </div>
     }

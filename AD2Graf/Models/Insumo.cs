@@ -10,5 +10,11 @@ namespace AD2Graf.Models
         [Required]
         [Display(Name = "Nome do Insumo")]
         public string Nome { get; set; } = string.Empty;
+
+        [Display(Name = "Data de Cadastro")]
+        public DateTime DataCadastro { get; set; } = DateTime.Now;
+
+        [Display(Name = "Ativo")]
+        public bool Ativo { get; set; } = true;
     }
 }

@@ -1,41 +1,63 @@
 @model AD2Graf.Models.Insumo
 
 @{
-    ViewData["Title"] = "Excluir Insumo";
+    ViewData["Title"] = Model.Ativo ? "Inativar Insumo" : "Ativar Insumo";
+    bool inativando = Model.Ativo;
 }
 
 <div class="container" style="padding: 60px 0;">
     <div style="max-width: 600px; margin: 0 auto;">
         <div style="margin-bottom: 40px;">
-            <h2 style="color: #1a1a1a; font-weight: 700; font-size: 2rem; margin-bottom: 8px;">Excluir Insumo</h2>
-            <p style="color: #999; font-size: 0.95rem;">Tem certeza que deseja remover este material?</p>
+            <h2 style="color: #1a1a1a; font-weight: 700; font-size: 2rem; margin-bottom: 8px;">
+                @(inativando ? "Inativar Insumo" : "Ativar Insumo")
+            </h2>
+            <p style="color: #999; font-size: 0.95rem;">
+                @(inativando ? "O insumo não aparecerá mais no registro de movimentações." : "O insumo voltará a aparecer no registro de movimentações.")
+            </p>
         </div>
 
-        <div style="border: 2px solid #dc3545; border-radius: 4px; padding: 40px; background-color: #fff5f5;">
+        <div style="border: 2px solid @(inativando ? "#dc3545" : "#155724"); border-radius: 4px; padding: 40px; background-color: @(inativando ? "#fff5f5" : "#f0fff4");">
             <div style="margin-bottom: 32px;">
-                <div style="margin-bottom: 24px;">
-                    <p style="color: #999; font-size: 0.85rem; margin-bottom: 4px;">Nome do Insumo</p>
-                    <p style="color: #1a1a1a; font-weight: 600; font-size: 0.95rem;">@Model.Nome</p>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 24px;">
+                    <div>
+                        <p style="color: #999; font-size: 0.85rem; margin-bottom: 4px;">Nome do Insumo</p>
+                        <p style="color: #1a1a1a; font-weight: 600; font-size: 0.95rem;">@Model.Nome</p>
+                    </div>
+                    <div>
+                        <p style="color: #999; font-size: 0.85rem; margin-bottom: 4px;">Data de Cadastro</p>
+                        <p style="color: #1a1a1a; font-weight: 600; font-size: 0.95rem;">@Model.DataCadastro.ToString("dd/MM/yyyy")</p>
+                    </div>
+                    <div>
+                        <p style="color: #999; font-size: 0.85rem; margin-bottom: 4px;">Status Atual</p>
+                        <span style="display: inline-block; padding: 4px 12px; border-radius: 4px; font-size: 0.85rem; font-weight: 600;
+                            background-color: @(inativando ? "#d4edda" : "#f0f0f0");
+                            color: @(inativando ? "#155724" : "#999");">
+                            @(inativando ? "Ativo" : "Inativo")
+                        </span>
+                    </div>
                 </div>
 
                 <div style="border-top: 1px solid #e8e8e8; padding-top: 24px;">
-                    <p style="color: #dc3545; font-weight: 600; margin-bottom: 8px;">
-                        <i class="bi bi-exclamation-circle-fill" style="margin-right: 8px;"></i>
-                        Esta ação não pode ser desfeita!
+                    <p style="color: @(inativando ? "#dc3545" : "#155724"); font-weight: 600; margin-bottom: 8px;">
+                        <i class="bi bi-@(inativando ? "slash-circle" : "check-circle")-fill" style="margin-right: 8px;"></i>
+                        @(inativando ? "O insumo será inativado!" : "O insumo será reativado!")
                     </p>
                     <p style="color: #999; font-size: 0.9rem;">
-                        O insumo será permanentemente removido do sistema.
+                        @(inativando
+                            ? "O histórico de movimentações será preservado. Você pode reativar quando quiser."
+                            : "O insumo voltará a aparecer no select de novas movimentações.")
                     </p>
                 </div>
             </div>
 
             <form asp-action="Delete" asp-route-id="@Model.Id" method="post">
+                @Html.AntiForgeryToken()
                 <div style="display: flex; gap: 12px;">
-                    <button type="submit" style="flex: 1; padding: 12px 24px; background-color: #dc3545; color: white; border: none; border-radius: 4px; font-weight: 600; font-size: 0.95rem; cursor: pointer; transition: all 0.3s;">
-                        <i class="bi bi-trash-fill" style="margin-right: 8px;"></i>
-                        Confirmar Exclusão
+                    <button type="submit" style="flex: 1; padding: 12px 24px; background-color: @(inativando ? "#dc3545" : "#155724"); color: white; border: none; border-radius: 4px; font-weight: 600; font-size: 0.95rem; cursor: pointer;">
+                        <i class="bi bi-@(inativando ? "slash-circle" : "check-circle")-fill" style="margin-right: 8px;"></i>
+                        @(inativando ? "Confirmar Inativação" : "Confirmar Ativação")
                     </button>
-                    <a asp-action="Index" style="flex: 1; padding: 12px 24px; background-color: transparent; color: #3d3d3d; border: 2px solid #3d3d3d; border-radius: 4px; font-weight: 600; font-size: 0.95rem; text-decoration: none; text-align: center; transition: all 0.3s;">
+                    <a asp-action="Index" style="flex: 1; padding: 12px 24px; background-color: transparent; color: #3d3d3d; border: 2px solid #3d3d3d; border-radius: 4px; font-weight: 600; font-size: 0.95rem; text-decoration: none; text-align: center;">
                         Cancelar
                     </a>
                 </div>
