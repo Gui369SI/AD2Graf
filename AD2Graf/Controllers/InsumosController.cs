@@ -40,15 +40,18 @@ namespace AD2Graf.Controllers
         // POST: INSUMOS/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(string Nome, decimal PrecoUnitario)
+        public async Task<IActionResult> Create(string Nome, decimal PrecoUnitario, DateTime DataCadastro)
         {
-            if (string.IsNullOrWhiteSpace(Nome))
+            // Verifica se já existe insumo com este nome (case-insensitive)
+            var jaExiste = await _context.Insumo.AnyAsync(i =>
+                i.Nome.ToLower() == Nome.ToLower());
+            if (jaExiste)
             {
-                ModelState.AddModelError("Nome", "O nome do insumo é obrigatório.");
+                ModelState.AddModelError("Nome", "Já existe um insumo com este nome.");
                 return View();
             }
 
-            var insumo = new Insumo { Nome = Nome, Ativo = true };
+            var insumo = new Insumo { Nome = Nome, PrecoUnitario = PrecoUnitario, Ativo = true, DataCadastro = DataCadastro };
             _context.Insumo.Add(insumo);
             await _context.SaveChangesAsync();
 
@@ -83,22 +86,41 @@ namespace AD2Graf.Controllers
         // POST: INSUMOS/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int? id, string Nome, decimal PrecoUnitario)
+        public async Task<IActionResult> Edit(int? id, string Nome, decimal PrecoUnitario, DateTime DataCadastro)
         {
             if (id == null) return NotFound();
 
             var insumo = await _context.Insumo.FindAsync(id);
             if (insumo == null) return NotFound();
 
+            // Validação
+            if (string.IsNullOrWhiteSpace(Nome))
+            {
+                ModelState.AddModelError("Nome", "O nome do insumo é obrigatório.");
+                var estoque = await _context.Estoque.FirstOrDefaultAsync(e => e.InsumoId == id);
+                ViewBag.PrecoUnitario = estoque?.PrecoUnitario ?? 0;
+                return View(insumo);
+            }
+
+            if (PrecoUnitario <= 0)
+            {
+                ModelState.AddModelError("PrecoUnitario", "O preço unitário é obrigatório e deve ser maior que zero.");
+                var estoque = await _context.Estoque.FirstOrDefaultAsync(e => e.InsumoId == id);
+                ViewBag.PrecoUnitario = estoque?.PrecoUnitario ?? 0;
+                return View(insumo);
+            }
+
             insumo.Nome = Nome;
+            insumo.PrecoUnitario = PrecoUnitario;
+            insumo.DataCadastro = DataCadastro;
             _context.Update(insumo);
 
             // Atualiza o preço no estoque
-            var estoque = await _context.Estoque.FirstOrDefaultAsync(e => e.InsumoId == id);
-            if (estoque != null)
+            var estoqueAtualizar = await _context.Estoque.FirstOrDefaultAsync(e => e.InsumoId == id);
+            if (estoqueAtualizar != null)
             {
-                estoque.PrecoUnitario = PrecoUnitario;
-                _context.Update(estoque);
+                estoqueAtualizar.PrecoUnitario = PrecoUnitario;
+                _context.Update(estoqueAtualizar);
             }
 
             await _context.SaveChangesAsync();
@@ -122,12 +144,22 @@ namespace AD2Graf.Controllers
         public async Task<IActionResult> DeleteConfirmed(int? id)
         {
             var insumo = await _context.Insumo.FindAsync(id);
-            if (insumo != null)
+            if (insumo == null) return NotFound();
+
+            // Se está ativo, verifica se o estoque está zerado antes de inativar
+            if (insumo.Ativo)
             {
-                insumo.Ativo = !insumo.Ativo;
-                _context.Update(insumo);
-                await _context.SaveChangesAsync();
+                var estoque = await _context.Estoque.FirstOrDefaultAsync(e => e.InsumoId == id);
+                if (estoque != null && estoque.QuantidadeEstoque > 0)
+                {
+                    ViewData["ErroMsg"] = "Não é possível inativar um insumo com quantidade em estoque. Esvazie o estoque primeiro.";
+                    return View("Delete", insumo);
+                }
             }
+
+            insumo.Ativo = !insumo.Ativo;
+            _context.Update(insumo);
+            await _context.SaveChangesAsync();
 
             return RedirectToAction(nameof(Index));
         }

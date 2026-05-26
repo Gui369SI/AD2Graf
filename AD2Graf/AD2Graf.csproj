@@ -7,6 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20260524160910_UpdateValidationMessages.cs" />
+    <Compile Remove="Migrations\20260524160910_UpdateValidationMessages.Designer.cs" />
     <Compile Remove="Models\EstoqueResumo.cs" />
   </ItemGroup>
 

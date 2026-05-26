@@ -20,8 +20,8 @@
             <thead>
                 <tr style="background-color: #f5f3f0; border-bottom: 2px solid #3d3d3d;">
                     <th style="padding: 16px; text-align: left; color: #1a1a1a; font-weight: 600; font-size: 0.9rem;">Nome do Insumo</th>
-                    <th style="padding: 16px; text-align: left; color: #1a1a1a; font-weight: 600; font-size: 0.9rem;">Data de Cadastro</th>
                     <th style="padding: 16px; text-align: left; color: #1a1a1a; font-weight: 600; font-size: 0.9rem;">Status</th>
+                    <th style="padding: 16px; text-align: left; color: #1a1a1a; font-weight: 600; font-size: 0.9rem;">Data de Registro</th>
                     <th style="padding: 16px; text-align: left; color: #1a1a1a; font-weight: 600; font-size: 0.9rem;">Ações</th>
                 </tr>
             </thead>
@@ -30,7 +30,6 @@
                 {
                     <tr style="border-bottom: 1px solid #e8e8e8;">
                         <td style="padding: 16px; color: #333;">@item.Nome</td>
-                        <td style="padding: 16px; color: #999;">@item.DataCadastro.ToString("dd/MM/yyyy")</td>
                         <td style="padding: 16px;">
                             <span style="display: inline-block; padding: 4px 12px; border-radius: 4px; font-size: 0.85rem; font-weight: 600;
                                 background-color: @(item.Ativo ? "#d4edda" : "#f0f0f0");
@@ -38,6 +37,7 @@
                                 @(item.Ativo ? "Ativo" : "Inativo")
                             </span>
                         </td>
+                        <td style="padding: 16px; color: #999;">@item.DataCadastro.ToString("dd/MM/yyyy HH:mm")</td>
                         <td style="padding: 16px;">
                             <div style="display: flex; gap: 8px;">
                                 <a asp-action="Edit" asp-route-id="@item.Id" style="padding: 6px 12px; background-color: transparent; color: #3d3d3d; border: 1px solid #3d3d3d; border-radius: 4px; text-decoration: none; font-size: 0.85rem; font-weight: 500; display: flex; align-items: center; gap: 4px;">
@@ -46,13 +46,13 @@
                                 @if (item.Ativo)
                                 {
                                     <a asp-action="Delete" asp-route-id="@item.Id" style="padding: 6px 12px; background-color: transparent; color: #dc3545; border: 1px solid #dc3545; border-radius: 4px; text-decoration: none; font-size: 0.85rem; font-weight: 500; display: flex; align-items: center; gap: 4px;">
-                                        <i class="bi bi-slash-circle"></i> Inativar
+                                        <i class="bi bi-slash-circle"></i> Remover
                                     </a>
                                 }
                                 else
                                 {
                                     <a asp-action="Delete" asp-route-id="@item.Id" style="padding: 6px 12px; background-color: transparent; color: #155724; border: 1px solid #155724; border-radius: 4px; text-decoration: none; font-size: 0.85rem; font-weight: 500; display: flex; align-items: center; gap: 4px;">
-                                        <i class="bi bi-check-circle"></i> Ativar
+                                        <i class="bi bi-check-circle"></i> Adicionar
                                     </a>
                                 }
                             </div>
@@ -69,7 +69,7 @@
             <i class="bi bi-bag" style="font-size: 3rem; display: block; margin-bottom: 16px;"></i>
             <p style="font-size: 1.1rem;">Nenhum insumo cadastrado ainda</p>
             <p style="margin-top: 8px;">
-                <a asp-action="Create" style="color: #3d3d3d; font-weight: 500; text-decoration: none;">Adicionar primeiro insumo →</a>
+                <a asp-action="Create" style="color: #3d3d3d; font-weight: 500; text-decoration: none;">Cadastrar primeiro insumo →</a>
             </p>
         </div>
     }

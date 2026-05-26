@@ -23,9 +23,10 @@ namespace AD2Graf.Models
         [Range(0, int.MaxValue, ErrorMessage = "A quantidade não pode ser negativa.")]
         public int QuantidadeEstoque { get; set; }
 
+        [Required(ErrorMessage = "Informe o preço do item")]
         [Column(TypeName = "decimal(18,2)")]
-        [Display(Name = "Preço Unitário (R$)")]
-        [Range(0, double.MaxValue)]
+        [Display(Name = "Preço Unit.")]
+        [Range(0.01, double.MaxValue, ErrorMessage = "O valor deve ser maior que zero")]
         public decimal PrecoUnitario { get; set; }
     }
 }

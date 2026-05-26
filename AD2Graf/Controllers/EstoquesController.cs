@@ -18,6 +18,7 @@ namespace AD2Graf.Controllers
         {
             var estoques = await _context.Estoque
                 .Include(e => e.Insumo)
+                .Where(e => e.Insumo.Ativo)
                 .ToListAsync();
 
             // Busca a data da última movimentação por InsumoId

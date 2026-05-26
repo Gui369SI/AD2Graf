@@ -31,10 +31,10 @@
             <table style="width: 100%; border-collapse: collapse;">
                 <thead>
                     <tr style="background-color: #f5f3f0; border-bottom: 2px solid #3d3d3d;">
-                        <th style="padding: 16px; text-align: left; color: #1a1a1a; font-weight: 600; font-size: 0.9rem;">Data de Registro</th>
-                        <th style="padding: 16px; text-align: left; color: #1a1a1a; font-weight: 600; font-size: 0.9rem;">Operação</th>
                         <th style="padding: 16px; text-align: left; color: #1a1a1a; font-weight: 600; font-size: 0.9rem;">Insumo</th>
                         <th style="padding: 16px; text-align: left; color: #1a1a1a; font-weight: 600; font-size: 0.9rem;">Quantidade</th>
+                        <th style="padding: 16px; text-align: left; color: #1a1a1a; font-weight: 600; font-size: 0.9rem;">Operação</th>
+                        <th style="padding: 16px; text-align: left; color: #1a1a1a; font-weight: 600; font-size: 0.9rem;">Data de Registro</th>
                         <th style="padding: 16px; text-align: left; color: #1a1a1a; font-weight: 600; font-size: 0.9rem;">Ações</th>
                     </tr>
                 </thead>
@@ -43,8 +43,11 @@
                     {
                         bool isEntrada = item.TipoMovimentacao == AD2Graf.Models.TipoMovimentacao.Entrada;
                         <tr style="border-bottom: 1px solid #e8e8e8;">
-                            <td style="padding: 16px; color: #555; font-size: 0.9rem;">
-                                @item.DataMovimentacao.ToString("dd/MM/yyyy HH:mm")
+                            <td style="padding: 16px; color: #333; font-weight: 500;">
+                                @item.Insumo?.Nome
+                            </td>
+                            <td style="padding: 16px; color: @(isEntrada ? "#155724" : "#dc3545"); font-weight: 600;">
+                                @(isEntrada ? "+" : "-")@item.Quantidade.ToString("N2")
                             </td>
                             <td style="padding: 16px;">
                                 <span style="display: inline-flex; align-items: center; gap: 6px; padding: 4px 12px; border-radius: 4px; font-size: 0.85rem; font-weight: 600;
@@ -54,11 +57,8 @@
                                     @(isEntrada ? "Entrada" : "Saída")
                                 </span>
                             </td>
-                            <td style="padding: 16px; color: #333; font-weight: 500;">
-                                @item.Insumo?.Nome
-                            </td>
-                            <td style="padding: 16px; color: @(isEntrada ? "#155724" : "#dc3545"); font-weight: 600;">
-                                @(isEntrada ? "+" : "-")@item.Quantidade.ToString("N2")
+                            <td style="padding: 16px; color: #555; font-size: 0.9rem;">
+                                @item.DataMovimentacao.ToString("dd/MM/yyyy HH:mm")
                             </td>
                             <td style="padding: 16px;">
                                 <div style="display: flex; gap: 12px;">
