@@ -23,7 +23,7 @@
 
 ## 📌 Sobre o Projeto
 
-O **AD2Graf** é um sistema web de gestão desenvolvido como projeto acadêmico no **4º semestre de GTI na Fatec Bragança Paulista**, com o objetivo de resolver um problema real: uma gráfica sem controle digital de estoque, pedidos e serviços — tudo feito no improviso.
+O **AD2Graf** é um sistema web de gestão desenvolvido como projeto acadêmico no **4º semestre de GTI na Fatec Bragança Paulista** em parceria com [@guigs-godoy](https://github.com/guigs-godoy). O objetivo foi resolver um problema real: uma gráfica sem controle digital de estoque, pedidos e serviços — tudo feito no improviso.
 
 O sistema permite controlar os materiais em estoque, registrar entradas e saídas, gerenciar pedidos de clientes e cadastrar os serviços oferecidos pela gráfica, tudo em uma interface web limpa e responsiva.
 
