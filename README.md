@@ -111,57 +111,7 @@ builder.Services.AddScoped<IPedidoService, PedidoService>();
 | **Bootstrap 5** | Estilização e responsividade |
 | **Bootstrap Icons** | Ícones da interface |
 
----
 
-## 🚀 Como Executar
-
-### Pré-requisitos
-
-- [.NET 8 SDK](https://dotnet.microsoft.com/download) ou superior
-- [Visual Studio 2022](https://visualstudio.microsoft.com/) com workload **ASP.NET and web development**
-- SQL Server LocalDB (incluso no Visual Studio)
-
-### Passo a passo
-
-**1. Clone o repositório**
-```bash
-git clone https://github.com/guigs-godoy/AD2Graf.git
-cd AD2Graf
-```
-
-**2. Abra a solution no Visual Studio**
-```
-AD2Graf.slnx
-```
-
-**3. Aplique as migrations para criar o banco**
-```bash
-dotnet ef database update
-```
-
-**4. Execute o projeto**
-```bash
-dotnet run --project AD2Graf
-```
-
-Ou pressione **F5** diretamente no Visual Studio.
-
-**5. Acesse no navegador**
-```
-https://localhost:{porta}
-```
-
----
-
-## 📐 Modelo de Dados
-
-```
-Insumo          ←──── Estoque
-   │                     │
-   └──── Movimentacao ───┘
-
-Pedido (independente)
-Servico (independente)
 ```
 
 - Cada **Insumo** tem exatamente um registro de **Estoque** vinculado
