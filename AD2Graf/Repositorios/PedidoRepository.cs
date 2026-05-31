@@ -14,7 +14,10 @@ namespace AD2Graf.Repositorios
         }
 
         public async Task<IEnumerable<Pedido>> ListarTodosAsync()
-            => await _context.Pedidos.OrderByDescending(p => p.DataCriacao).ToListAsync();
+            => await _context.Pedidos
+                .Include(p => p.Servico)
+                .OrderByDescending(p => p.DataCriacao)
+                .ToListAsync();
 
         public async Task<Pedido?> BuscarPorIdAsync(int id)
             => await _context.Pedidos.FindAsync(id);

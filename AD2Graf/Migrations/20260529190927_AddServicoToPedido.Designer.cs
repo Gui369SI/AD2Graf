@@ -4,6 +4,7 @@ using AD2Graf.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AD2Graf.Migrations
 {
     [DbContext(typeof(AD2GrafContext))]
-    partial class AD2GrafContextModelSnapshot : ModelSnapshot
+    [Migration("20260529190927_AddServicoToPedido")]
+    partial class AddServicoToPedido
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -121,7 +124,11 @@ namespace AD2Graf.Migrations
                     b.Property<int>("Quantidade")
                         .HasColumnType("int");
 
-                    b.Property<int>("ServicoId")
+                    b.Property<string>("ServicoId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("ServiçoId")
                         .HasColumnType("int");
 
                     b.Property<int>("Status")
@@ -129,7 +136,7 @@ namespace AD2Graf.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ServicoId");
+                    b.HasIndex("ServiçoId");
 
                     b.ToTable("Pedidos");
                 });
@@ -183,9 +190,7 @@ namespace AD2Graf.Migrations
                 {
                     b.HasOne("AD2Graf.Models.Servico", "Servico")
                         .WithMany()
-                        .HasForeignKey("ServicoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ServiçoId");
 
                     b.Navigation("Servico");
                 });

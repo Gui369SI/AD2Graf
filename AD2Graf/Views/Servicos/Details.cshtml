@@ -1,0 +1,40 @@
+@model AD2Graf.Models.Servico
+
+@{
+    ViewData["Title"] = "Detalhes do Serviço";
+}
+
+<div class="container" style="padding: 60px 0;">
+    <div style="max-width: 600px; margin: 0 auto;">
+        <div style="margin-bottom: 40px;">
+            <h2 style="color: #1a1a1a; font-weight: 700; font-size: 2rem; margin-bottom: 8px;">@Model.Nome</h2>
+            <p style="color: #999; font-size: 0.95rem;">Informações do serviço</p>
+        </div>
+
+        <div style="border: 2px solid #3d3d3d; border-radius: 4px; padding: 40px;">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 32px;">
+                <div>
+                    <p style="color: #999; font-size: 0.85rem; margin-bottom: 8px; font-weight: 600;">Nome do Serviço</p>
+                    <p style="color: #1a1a1a; font-size: 0.95rem;">@Model.Nome</p>
+                </div>
+                <div>
+                    <p style="color: #999; font-size: 0.85rem; margin-bottom: 8px; font-weight: 600;">Preço</p>
+                    <p style="color: #1a1a1a; font-size: 0.95rem; font-weight: 600;">R$ @Model.PrecoServico.ToString("N2")</p>
+                </div>
+                <div>
+                    <p style="color: #999; font-size: 0.85rem; margin-bottom: 8px; font-weight: 600;">Data de Cadastro</p>
+                    <p style="color: #1a1a1a; font-size: 0.95rem;">@Model.DataCadastro.ToString("dd/MM/yyyy HH:mm")</p>
+                </div>
+            </div>
+
+            <div style="display: flex; gap: 12px;">
+                <a asp-action="Edit" asp-route-id="@Model.Id" style="flex: 1; padding: 12px 24px; background-color: #3d3d3d; color: white; border: none; border-radius: 4px; font-weight: 600; font-size: 0.95rem; text-decoration: none; text-align: center;">
+                    Editar
+                </a>
+                <a asp-action="Index" style="flex: 1; padding: 12px 24px; background-color: transparent; color: #3d3d3d; border: 2px solid #3d3d3d; border-radius: 4px; font-weight: 600; font-size: 0.95rem; text-decoration: none; text-align: center;">
+                    Voltar
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

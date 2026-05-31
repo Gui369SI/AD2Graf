@@ -1,7 +1,7 @@
 @model IEnumerable<AD2Graf.Models.Insumo>
 
 @{
-    ViewData["Title"] = "Gestão de Insumos";
+    ViewData["Title"] = "Insumos";
 }
 
 <div class="container" style="padding: 60px 0;">
@@ -20,6 +20,7 @@
             <thead>
                 <tr style="background-color: #f5f3f0; border-bottom: 2px solid #3d3d3d;">
                     <th style="padding: 16px; text-align: left; color: #1a1a1a; font-weight: 600; font-size: 0.9rem;">Nome do Insumo</th>
+                    <th style="padding: 16px; text-align: left; color: #1a1a1a; font-weight: 600; font-size: 0.9rem;">Preço Unit.</th>
                     <th style="padding: 16px; text-align: left; color: #1a1a1a; font-weight: 600; font-size: 0.9rem;">Status</th>
                     <th style="padding: 16px; text-align: left; color: #1a1a1a; font-weight: 600; font-size: 0.9rem;">Data de Registro</th>
                     <th style="padding: 16px; text-align: left; color: #1a1a1a; font-weight: 600; font-size: 0.9rem;">Ações</th>
@@ -30,6 +31,7 @@
                 {
                     <tr style="border-bottom: 1px solid #e8e8e8;">
                         <td style="padding: 16px; color: #333;">@item.Nome</td>
+                        <td style="padding: 16px; color: #1a1a1a; font-weight: 600;">R$ @item.PrecoUnitario.ToString("N2")</td>
                         <td style="padding: 16px;">
                             <span style="display: inline-block; padding: 4px 12px; border-radius: 4px; font-size: 0.85rem; font-weight: 600;
                                 background-color: @(item.Ativo ? "#d4edda" : "#f0f0f0");

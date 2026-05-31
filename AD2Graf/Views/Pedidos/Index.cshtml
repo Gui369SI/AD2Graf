@@ -1,13 +1,13 @@
 ﻿@model IEnumerable<AD2Graf.Models.Pedido>
 
 @{
-    ViewData["Title"] = "Pedidos de Impressão";
+    ViewData["Title"] = "Pedidos";
 }
 
 <div class="container" style="padding: 60px 0;">
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px;">
         <div>
-            <h2 style="color: #1a1a1a; font-weight: 700; font-size: 2rem; margin-bottom: 8px;">Pedidos</h2>
+            <h2 style="color: #1a1a1a; font-weight: 700; font-size: 2rem; margin-bottom: 8px;">Controle de Pedidos</h2>
             <p style="color: #999; font-size: 0.95rem;">Gerenciar todos os pedidos e solicitações</p>
         </div>
         <a asp-action="Create" style="background-color: #3d3d3d; color: white; padding: 12px 24px; text-decoration: none; border-radius: 4px; font-weight: 500; display: flex; align-items: center; gap: 8px; transition: all 0.3s;">
@@ -20,9 +20,8 @@
             <thead>
                 <tr style="background-color: #f5f3f0; border-bottom: 2px solid #3d3d3d;">
                     <th style="padding: 16px; text-align: left; color: #1a1a1a; font-weight: 600; font-size: 0.9rem;">Empresa</th>
-                    <th style="padding: 16px; text-align: left; color: #1a1a1a; font-weight: 600; font-size: 0.9rem;">Descrição</th>
+                    <th style="padding: 16px; text-align: left; color: #1a1a1a; font-weight: 600; font-size: 0.9rem;">Serviço</th>
                     <th style="padding: 16px; text-align: left; color: #1a1a1a; font-weight: 600; font-size: 0.9rem;">Quantidade</th>
-                    <th style="padding: 16px; text-align: left; color: #1a1a1a; font-weight: 600; font-size: 0.9rem;">Preço Unit.</th>
                     <th style="padding: 16px; text-align: left; color: #1a1a1a; font-weight: 600; font-size: 0.9rem;">Valor Total</th>
                     <th style="padding: 16px; text-align: left; color: #1a1a1a; font-weight: 600; font-size: 0.9rem;">Status</th>
                     <th style="padding: 16px; text-align: left; color: #1a1a1a; font-weight: 600; font-size: 0.9rem;">Data de Cadastro</th>
@@ -30,22 +29,24 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (var pedido in Model)
+                @foreach (var pedido in Model.OrderByDescending(p => p.DataCriacao))
                 {
+                    var valorTotal = (pedido.Servico?.PrecoServico ?? 0) * pedido.Quantidade;
                     <tr style="border-bottom: 1px solid #e8e8e8; transition: all 0.2s;">
                         <td style="padding: 16px; color: #333;">@pedido.Empresa</td>
-                        <td style="padding: 16px; color: #333;">@pedido.Descricao</td>
+                        <td style="padding: 16px; color: #333;">@pedido.Servico?.Nome</td>
                         <td style="padding: 16px; color: #333;">@pedido.Quantidade</td>
-                        <td style="padding: 16px; color: #333;">@pedido.Preco.ToString("C")</td>
-                        <td style="padding: 16px; color: #333;" font-weight: 600;">@((pedido.Preco * pedido.Quantidade).ToString("C"))</td>
+                        <td style="padding: 16px; color: #333; font-weight: 600;">R$ @valorTotal.ToString("N2")</td>
                         <td style="padding: 16px;">
-                            <span style="display: inline-block; padding: 6px 12px; border-radius: 4px; font-size: 0.85rem; font-weight: 500; background-color: @(pedido.Status == AD2Graf.Models.StatusPedido.Concluido ? "#d4edda" :
-                                                                                             pedido.Status == AD2Graf.Models.StatusPedido.Cancelado ? "#f8d7da" :
-                                                                                             pedido.Status == AD2Graf.Models.StatusPedido.EmProducao ? "#cfe2ff" : "#fff3cd"); color: @(pedido.Status == AD2Graf.Models.StatusPedido.Concluido ? "#155724" :
-                                                                                             pedido.Status == AD2Graf.Models.StatusPedido.Cancelado ? "#721c24" :
-                                                                                             pedido.Status == AD2Graf.Models.StatusPedido.EmProducao ? "#084298" : "#997404");">
-                                @Html.DisplayFor(m => pedido.Status)
-                            </span>
+                            <form asp-action="AtualizarStatus" asp-route-id="@pedido.Id" method="post" style="display: inline;">
+                                <select name="novoStatus" onchange="if(confirm('Tem certeza que deseja mudar o status?')) { this.form.submit(); } else { this.value = '@pedido.Status'; }"
+                                        style="padding: 8px 12px; border-radius: 4px; font-size: 0.85rem; font-weight: 600; border: 1px solid #3d3d3d; cursor: pointer; background-color: @(pedido.Status == AD2Graf.Models.StatusPedido.Pendente ? "#fff3cd" : pedido.Status == AD2Graf.Models.StatusPedido.EmAndamento ? "#cfe2ff" : pedido.Status == AD2Graf.Models.StatusPedido.Concluido ? "#d4edda" : "#f8d7da"); color: @(pedido.Status == AD2Graf.Models.StatusPedido.Pendente ? "#997404" : pedido.Status == AD2Graf.Models.StatusPedido.EmAndamento ? "#084298" : pedido.Status == AD2Graf.Models.StatusPedido.Concluido ? "#155724" : "#721c24");">
+                                    <option value="0" selected="@(pedido.Status == AD2Graf.Models.StatusPedido.Pendente)">Pendente</option>
+                                    <option value="1" selected="@(pedido.Status == AD2Graf.Models.StatusPedido.EmAndamento)">Em Andamento</option>
+                                    <option value="2" selected="@(pedido.Status == AD2Graf.Models.StatusPedido.Concluido)">Concluído</option>
+                                    <option value="3" selected="@(pedido.Status == AD2Graf.Models.StatusPedido.Cancelado)">Cancelado</option>
+                                </select>
+                            </form>
                         </td>
                         <td style="padding: 16px; color: #999;">@pedido.DataCriacao.ToString("dd/MM/yyyy HH:mm")</td>
                         <td style="padding: 16px;">

@@ -5,6 +5,7 @@ namespace AD2Graf.Data
 {
     public class AD2GrafContext : DbContext
     {
+        public DbSet<AD2Graf.Models.Servico> Servico { get; set; } = default!;
         public AD2GrafContext(DbContextOptions<AD2GrafContext> options)
             : base(options)
         {
